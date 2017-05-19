@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "Paragons Solutions Company";
+}
+
+<div ng-app="app"
+     ng-controller="EmployeeController as vm">
+
+    <form name="employeeForm">
+        <!-- ** BEGIN MESSAGE AREA ** -->
+        <div ng-hide="vm.uiState.isValid" class="row">
+            <div class="col-xs-12">
+                <div class="alert alert-danger
+                    alert-dismissable"
+                     role="alert">
+                    <button type="button" class="close"
+                            data-dismiss="alert">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <ul>
+                        <li ng-repeat="msg in  vm.uiState.messages">
+                            {{msg.message}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- ** END MESSAGE AREA ** -->
+        <!-- ** BEGIN SEARCH AREA ** -->
+        <div ng-show="vm.uiState.isSearchAreaVisible" class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Search for Employees</h1>
+            </div>
+            <div class="panel-body" ng-controller="DepartmentController as dvm">
+                <div class="form-group">
+                    <label for="searchDepartmentId"></label>
+                    <select id="searchDepartmentId"
+                            class="form-control"
+                            ng-model="vm.searchInput.selectedDepartment"
+                            ng-options="item.Name  for item in dvm.searchDepartments track by item.Id  "></select>
+                </div>
+                <div class="form-group">
+                    <label for="searchEmployeeName"></label>
+                    <input id="searchEmployeeName"
+                           type="text"
+                           class="form-control"
+                           ng-model="vm.searchInput.Name" />
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button"
+                        class="btn btn-sm btn-primary"
+                        ng-click="vm.search()">
+                    <i class="glyphicon glyphicon-search"></i>
+                    &nbsp;Search
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-primary"
+                        ng-click="vm.resetSearch()">
+                    <i class="glyphicon glyphicon-share-alt"></i>
+                    &nbsp;Reset
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-success"
+                        ng-click="vm.addClick()">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    &nbsp;Add
+                </button>
+            </div>
+        </div>
+        <!-- ** END SEARCH AREA ** -->
+        <!-- ** BEGIN DETAIL AREA ** -->
+        <div ng-show="vm.uiState.isDetailAreaVisible" class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">
+                    Employee Information
+                </h1>
+            </div>
+            <div class="panel-body">
+                <!-- ** BEGIN INPUT AREA -->
+                <div class="form-group" ng-controller="DepartmentController as dvm">
+                    <label for="categoryId">Department</label>
+                    <select id="categoryId"
+                            class="form-control"
+                            ng-model="vm.employee.Department"
+                            ng-options="item.Name  for item in dvm.departments track by item.Id  "></select>
+                </div>
+                <div class="form-group">
+                    <label for="employeeName">Employee Name</label>
+                    <input type="text"
+                           id="employeeName"
+                           name="employeeName"
+                           required
+                           ng-minlength="4"
+                           ng-maxlength="150"
+                           class="form-control"
+                           ng-model="vm.employee.Name" />
+
+                </div>
+                <div class="form-group">
+                    <label for="address">E-Mail</label>
+                    <input type="text"
+                           id="address"
+                           name="address"
+                           required
+                           class="form-control"
+                           ng-model="vm.employee.Mail" />
+                </div>
+
+                <!-- ** END INPUT AREA -->
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button type="button"
+                                class="btn btn-sm btn-primary"
+                                ng-click=" vm.saveClick(employeeForm)">
+                            <i class="glyphicon glyphicon-floppy-disk"></i>
+                            &nbsp;Save
+                        </button>
+                        <button class="btn btn-sm btn-primary"
+                                type="button"
+                                ng-click="vm.cancelClick(employeeForm)">
+                            <i class="glyphicon glyphicon-remove-circle"></i>
+                            &nbsp;Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ** END DETAIL AREA ** -->
+        <!-- ** BEGIN LIST AREA ** -->
+        <div ng-show="vm.uiState.isListAreaVisible" class="table-responsive">
+
+            <table class="table table-hover table-bordered" bs-table>
+                <thead>
+                    <tr>
+                        <th>Edit</th>
+                        <th ng-click="predicate='Name'; reverse=!reverse"> Employee Name</th>
+                        <th ng-click="predicate='Mail'; reverse=!reverse">Employee Mail</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr ng-repeat="employee in vm.employees| orderBy:predicate:reverse|filter: vm.searchImmediate">
+                        <td class="pdsa-action-button-column">
+                            <a href="#"
+                               ng-click="vm.editClick(employee.Id)"
+                               class="btn btn-default btn-sm">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                        </td>
+                        <td>{{employee.Name}}</td>
+                        <td>{{employee.Mail}}</td>
+                        <td class="pdsa-action-button-column">
+                            <a href="#"
+                               ng-click="vm.deleteClick(employee.Id)"
+                               class="btn btn-default btn-sm">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ** END LIST AREA ** -->
+    </form>
+
+</div>
+
+@section scripts {
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/app/app.module.js"></script>
+    <script src="~/app/employee.Controller.js"></script>
+    <script src="~/app/department.Controller.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/bs-table.min.js"></script>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+}

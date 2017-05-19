@@ -1,0 +1,4 @@
+c:\users\omar el-essiely\documents\visual studio 2017\Projects\Schneider.ManagementSystem\Schneider.ManagementSystem.Shared\bin\Debug\Schneider.ManagementSystem.Shared.dll
+c:\users\omar el-essiely\documents\visual studio 2017\Projects\Schneider.ManagementSystem\Schneider.ManagementSystem.Shared\bin\Debug\Schneider.ManagementSystem.Shared.pdb
+c:\users\omar el-essiely\documents\visual studio 2017\Projects\Schneider.ManagementSystem\Schneider.ManagementSystem.Shared\obj\Debug\Schneider.ManagementSystem.Shared.dll
+c:\users\omar el-essiely\documents\visual studio 2017\Projects\Schneider.ManagementSystem\Schneider.ManagementSystem.Shared\obj\Debug\Schneider.ManagementSystem.Shared.pdb
